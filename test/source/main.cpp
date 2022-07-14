@@ -1,24 +1,29 @@
 #include <iostream>
 
-#include "User.hpp"
-#include "CEU/io/BinaryFileIO.hpp"
+#include "CEU/memory/LinuxProcess.hpp"
 
-int main()
+/**
+ * The entry point
+ *
+ * \param argc The number of arguments
+ * \param argv
+ *  1 - The program path (Automatically set)
+ *  2 - The name of other process to open (e.g : test)
+ *  3 - The address of variable to read/write (e.g : 0x7ffffae286dc)
+ *
+ * \return The status code
+ */
+int main(int argc, char *argv[])
 {
-    CEU::BinaryFileIO bfio {"data.dat", true};
-    test::User userToWrite {"Dany", "Pignoux", 24};
+    long address {std::strtol(argv[2], nullptr, 16)};
+    CEU::LinuxProcess process {argv[1]};
 
-    // Write the user data in file
-    bfio.writeString(userToWrite.getFirstname());
-    bfio.writeString(userToWrite.getLastname());
-    bfio.writeUnsignedInt(userToWrite.getAge());
+    std::cout << "PID : " << process.getPID() << '\n';
+    std::cout << "OLD VALUE : " << process.readInt(address) << '\n';
 
-    // Read the user data from file
-    test::User userToRead {bfio.readString(), bfio.readString(), bfio.readUnsignedInt()};
+    process.writeInt(address, 12);
 
-    std::cout << "Firstname : " << userToRead.getFirstname() << '\n';
-    std::cout << "Lastname : " << userToRead.getLastname() << '\n';
-    std::cout << "Age : " << userToRead.getAge() << '\n';
+    std::cout << "NEW VALUE : " << process.readInt(address) << '\n';
 
     return 0;
 }
