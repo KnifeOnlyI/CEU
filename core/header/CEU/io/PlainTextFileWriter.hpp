@@ -1,16 +1,14 @@
-#ifndef CEU_BINARYFILEWRITER_HPP
-#define CEU_BINARYFILEWRITER_HPP
+#ifndef CEU_PLAINTEXTFILEWRITER_HPP
+#define CEU_PLAINTEXTFILEWRITER_HPP
 
-#include <cstddef>
-#include <string>
 #include <fstream>
 
 namespace CEU
 {
 /**
- * The class to write a binary file
+ * The class to write a plain text file
  */
-class BinaryFileWriter
+class PlainTextFileWriter
 {
 public:
 
@@ -20,12 +18,12 @@ public:
      * \param filepath The filepath
      * \param append TRUE to append the new content to the already existing, FALSE to delete all and overwrite it
      */
-    explicit BinaryFileWriter(std::string filepath, bool append = true);
+    explicit PlainTextFileWriter(std::string filepath, bool append = true);
 
     /**
      * Destroy the instance
      */
-    virtual ~BinaryFileWriter();
+    virtual ~PlainTextFileWriter();
 
     /**
      * Open the stream
@@ -38,25 +36,11 @@ public:
     void close();
 
     /**
-     * Write a size value
-     *
-     * \param value The value to write
-     */
-    void writeSize(std::size_t value);
-
-    /**
-     * Write an unsigned int value
-     *
-     * \param value The value to write
-     */
-    void writeUnsignedInt(unsigned int value);
-
-    /**
      * Write a string value
      *
      * \param value The value to write
      */
-    void writeString(const std::string &value);
+    void write(const std::string &value);
 
 private:
 
@@ -71,4 +55,4 @@ private:
 };
 }
 
-#endif //CEU_BINARYFILEWRITER_HPP
+#endif //CEU_PLAINTEXTFILEWRITER_HPP

@@ -20,6 +20,11 @@ public:
     explicit BinaryFileReader(std::string filepath);
 
     /**
+     * Destroy the instance
+     */
+    virtual ~BinaryFileReader();
+
+    /**
      * Open the stream
      */
     void open();
@@ -28,11 +33,6 @@ public:
      * Close the stream
      */
     void close();
-
-    /**
-     * Destroy the instance
-     */
-    virtual ~BinaryFileReader();
 
     /**
      * Read a size value
